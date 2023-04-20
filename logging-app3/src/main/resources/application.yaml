@@ -1,0 +1,15 @@
+server:
+  port: 8082
+logging:
+  level:
+    root: info
+    org:
+      zalando:
+        logbook: trace
+spring:
+  application:
+    name: logging-app3-springboot
+  environment: local
+domain:
+  name: logging-poc
+

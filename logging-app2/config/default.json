@@ -1,0 +1,7 @@
+{
+	"thirdApp": {
+		"host": "localhost",
+		"port": "8082",
+		"path": "/v1/app3/logging"
+	}
+}

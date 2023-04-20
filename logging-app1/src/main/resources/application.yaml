@@ -1,0 +1,15 @@
+logging:
+  level:
+    root: info
+    org:
+      zalando:
+        logbook: trace
+spring:
+  application:
+    name: logging-app1-springboot
+  environment: local
+domain:
+  name: logging-poc
+secondApp:
+  url: http://localhost:8081/v1/app2/logging
+
