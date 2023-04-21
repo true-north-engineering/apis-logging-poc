@@ -1,0 +1,26 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: logging-app2-deployment
+  namespace: logging
+spec:
+  selector:
+    matchLabels:
+      app: logging-app2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: logging-app2
+    spec:
+      containers:
+        - name: logging-app2
+          ports:
+            - name: external-http
+              containerPort: 8081
+              protocol: TCP
+          imagePullPolicy: Always
+          image: pav3loff/logging-app2:latest
+          env:
+            - name: THIRD_APP_HOST
+              value: 10.109.139.186
