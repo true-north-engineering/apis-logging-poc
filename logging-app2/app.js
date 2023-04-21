@@ -58,6 +58,11 @@ app.post('/v1/app2/logging', jsonParser, (req, res) => {
 
     const correlation = crypto.randomBytes(8).toString("hex");
 
+    logger.info(getRequestInfo(req, correlation));
+
+    logger.info("A request was made to second application");  
+    logger.info("Sending a POST request to second application");
+
     const thirdAppRequest = http.request({...thirdAppOptions, headers: {...thirdAppOptions.headers, "Content-Length": Buffer.byteLength(JSON.stringify(req.body)), "X-B3-TraceId": traceId, "X-B3-SpanId": crypto.randomBytes(8).toString("hex"), "X-B3-ParentSpanId": spanId}}, thirdAppResponse => {
       thirdAppResponse.on('data', chunk => {
       })
