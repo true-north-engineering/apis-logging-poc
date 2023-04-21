@@ -66,6 +66,8 @@ app.post('/v1/app2/logging', jsonParser, (req, res) => {
         thirdAppResponse.on("data", chunk => {
         })
     });
+    
+    console.log(thirdAppRequest);
 
     thirdAppRequest.write(JSON.stringify(req.body));
     thirdAppRequest.end();
