@@ -72,7 +72,6 @@ app.post('/v1/app2/logging', jsonParser, (req, res) => {
     thirdAppRequest.end();
 
     res.send();
-    logger.info(getResponseInfo(res, correlation));
 });
 
 app.listen(port, () => {
