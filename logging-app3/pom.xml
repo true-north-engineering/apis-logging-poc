@@ -19,13 +19,6 @@
 		<logbook.version>2.16.0</logbook.version>
 		<logstash.logback.version>7.3</logstash.logback.version>
 	</properties>
-	<repositories>
-		<repository>
-			<id>splunk-artifactory</id>
-			<name>Splunk Releases</name>
-			<url>https://splunk.jfrog.io/splunk/ext-releases-local</url>
-		</repository>
-	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -48,13 +41,6 @@
 			<groupId>net.logstash.logback</groupId>
 			<artifactId>logstash-logback-encoder</artifactId>
 			<version>${logstash.logback.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.splunk.logging</groupId>
-			<artifactId>splunk-library-javalogging</artifactId>
-			<version>1.11.7</version>
-			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
