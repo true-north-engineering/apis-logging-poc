@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: logging-app1-service
+  namespace: logging
+spec:
+  selector:
+    app: logging-app1
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
+

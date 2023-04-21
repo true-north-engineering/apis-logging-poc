@@ -17,8 +17,10 @@ public class DefaultController {
     private Logger logger = LoggerFactory.getLogger(DefaultController.class);
 
     @PostMapping
-    public void log(@RequestBody Message message) {
+    public ResponseEntity<?> log(@RequestBody Message message) {
         logger.info("A request was made to third application");
+
+        return ResponseEntity.ok().build();
     }
 
 }

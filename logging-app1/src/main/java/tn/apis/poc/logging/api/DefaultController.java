@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import tn.apis.poc.logging.model.Message;
@@ -24,15 +25,17 @@ public class DefaultController {
     private String secondAppUrl;
 
     @PostMapping
-    public void log(@RequestBody Message message) {
+    public ResponseEntity<?> log(@RequestBody Message message) {
         logger.info("A request was made to first application");
         logger.info("Sending a POST request to second application");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("source", "logging-app1-springboot");
+        headers.set("destination", "logging-app3-springboot");
         HttpEntity<Message> request = new HttpEntity<>(message, headers);
 
-        restTemplate.postForEntity(secondAppUrl, request, String.class);
+        return restTemplate.postForEntity(secondAppUrl, request, String.class);
     }
 
 }

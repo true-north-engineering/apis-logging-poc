@@ -1,0 +1,29 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: logging-app1-deployment
+  namespace: logging
+spec:
+  selector:
+    matchLabels:
+      app: logging-app1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: logging-app1
+    spec:
+      containers:
+        - name: logging-app1
+          ports:
+            - name: external-http
+              containerPort: 8080
+              protocol: TCP
+          imagePullPolicy: Always
+          image: pav3loff/logging-app1:latest
+          env:
+            - name: secondApp.url
+              valueFrom:
+                configMapKeyRef:
+                  key: SECOND_APP_URL
+                  name: logging-app1-config

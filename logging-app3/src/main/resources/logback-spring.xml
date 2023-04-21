@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <springProperty scope="context" name="application" source="spring.application.name" />
-    <springProperty scope="context" name="environment" source="spring.environment" />
-    <springProperty scope="context" name="domain" source="domain.name" />
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
@@ -11,14 +9,10 @@
                     <pattern>
                         {
                         "timestamp": "%date{yyyy-MM-dd HH:mm:ss.SSS}",
-                        "environment": "${environment}",
-                        "domain": "${domain}",
-                        "app_name": "${application}",
                         "level": "%level",
                         "trace_id": "%X{traceId}",
                         "span_id": "%X{spanId}",
-                        "message":
-                        "%msg"
+                        "message": "%msg"
                         }
                     </pattern>
                 </pattern>

@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  SECOND_APP_URL: http://10.103.188.116:8081/v1/app2/logging
+kind: ConfigMap
+metadata:
+  name: logging-app1-config
+  namespace: logging
