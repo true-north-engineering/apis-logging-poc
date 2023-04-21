@@ -64,11 +64,10 @@ app.post('/v1/app2/logging', jsonParser, (req, res) => {
 
     const thirdAppRequest = http.request({...thirdAppOptions, headers: {...thirdAppOptions.headers, "Content-Length": Buffer.byteLength(JSON.stringify(req.body)), "X-B3-TraceId": traceId, "X-B3-SpanId": crypto.randomBytes(8).toString("hex"), "X-B3-ParentSpanId": spanId}}, thirdAppResponse => {
         thirdAppResponse.on("data", chunk => {
+          console.log(chunk);
         })
     });
     
-    console.log(thirdAppRequest);
-
     thirdAppRequest.write(JSON.stringify(req.body));
     thirdAppRequest.end();
 
