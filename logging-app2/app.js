@@ -53,6 +53,8 @@ app.post('/v1/app2/logging', jsonParser, (req, res) => {
     const traceId = req.headers["x-b3-traceid"];
     const spanId = req.headers["x-b3-spanid"];
 
+    console.log(req.headers);
+
     logger.defaultMeta["trace_id"] = traceId;
     logger.defaultMeta["span_id"] = spanId;
 
@@ -63,7 +65,7 @@ app.post('/v1/app2/logging', jsonParser, (req, res) => {
     logger.info("A request was made to second application");  
     logger.info("Sending a POST request to second application");
 
-    const thirdAppRequest = http.request({...thirdAppOptions, headers: {...thirdAppOptions.headers, "Content-Length": Buffer.byteLength(JSON.stringify(req.body)), "X-B3-TraceId": traceId, "X-B3-SpanId": crypto.randomBytes(8).toString("hex"), "X-B3-ParentSpanId": spanId}}, thirdAppResponse => {
+    const thirdAppRequest = http.request({...thirdAppOptions, headers: {...thirdAppOptions.headers, "Content-Length": Buffer.byteLength(JSON.stringify(req.body)), "X-B3-TraceId": traceId, "X-B3-SpanId": crypto.randomBytes(8).toString("hex"), "X-B3-ParentSpanId": spanId, "source": req.headers.source, "destination": req.headers.destination}}, thirdAppResponse => {
       thirdAppResponse.on('data', chunk => {
       })
 
@@ -116,6 +118,12 @@ function getRequestInfo(req, correlation) {
           ],
           "x-b3-traceid": [
             req.headers["x-b3-traceid"]
+          ],
+          "source": [
+            req.headers.source
+          ],
+          "destination": [
+            req.headers.destination
           ]
         },
         "body": req.body
