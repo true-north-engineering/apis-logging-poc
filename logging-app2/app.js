@@ -9,6 +9,7 @@ const {
 const crypto = require("crypto");
 const responseTime = require('response-time');
 const config = require('config');
+require("dotenv").config();
 
 const app = express();
 const jsonParser = bodyParser.json();
@@ -36,9 +37,9 @@ const logger = createLogger({
 });
 
 const thirdAppOptions = {
-    host: config.get("thirdApp.host"),
-    port: config.get("thirdApp.port"),
-    path: config.get("thirdApp.path"),
+    host: process.env.THIRD_APP_HOST,
+    port: process.env.THIRD_APP_PORT,
+    path: process.env.THIRD_APP_PATH,
     method: "POST",
     headers: {
         "Content-Type": "application/json",
