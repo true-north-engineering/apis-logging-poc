@@ -57,15 +57,12 @@ app.post('/v1/app2/logging', jsonParser, (req, res) => {
     logger.defaultMeta["span_id"] = spanId;
 
     const correlation = crypto.randomBytes(8).toString("hex");
-    logger.info(getRequestInfo(req, correlation));
-
-    logger.info("A request was made to second application");  
-    logger.info("Sending a POST request to second application");
 
     const thirdAppRequest = http.request({...thirdAppOptions, headers: {...thirdAppOptions.headers, "Content-Length": Buffer.byteLength(JSON.stringify(req.body)), "X-B3-TraceId": traceId, "X-B3-SpanId": crypto.randomBytes(8).toString("hex"), "X-B3-ParentSpanId": spanId}}, thirdAppResponse => {
-        thirdAppResponse.on("data", chunk => {
-          logger.info(chunk);
-        })
+      thirdAppResponse.on('data', chunk => {
+      })
+
+      logger.info(getResponseInfo(thirdAppResponse.statusCode, thirdAppResponse.headers.connection, correlation));
     });
     
     thirdAppRequest.write(JSON.stringify(req.body));
@@ -122,17 +119,17 @@ function getRequestInfo(req, correlation) {
     return JSON.stringify(message);
 }
 
-function getResponseInfo(res, correlation) {
+function getResponseInfo(status, connection, correlation) {
     const message = {
         "origin": "local",
         "type": "response",
         "correlation": correlation,
-        "duration": Math.round(res.getHeaders()["x-response-time"].split("ms")[0]),
+        "duration": "undefined",
         "protocol": "HTTP/1.1",
-        "status": res.statusCode,
+        "status": status,
         "headers": {
           "Connection": [
-            res.req.headers.connection
+            connection
           ],
           "Date": [
             new Date()
