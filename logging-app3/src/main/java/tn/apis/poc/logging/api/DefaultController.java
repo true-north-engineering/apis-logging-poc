@@ -19,6 +19,9 @@ public class DefaultController {
     @PostMapping
     public ResponseEntity<?> log(@RequestBody Message message) {
         logger.info("A request was made to third application");
+        logger.debug("Debug log");
+        logger.warn("Warning log");
+        logger.error("Error log");
 
         return ResponseEntity.ok().build();
     }

@@ -8,7 +8,6 @@ const {
 } = require("winston");
 const crypto = require("crypto");
 const responseTime = require('response-time');
-const config = require('config');
 require("dotenv").config();
 
 const app = express();
@@ -24,10 +23,10 @@ const logLevels = {
 };
 
 const logger = createLogger({
-    format: format.combine(format.timestamp({format: "YYYY-MM-DD HH:mm:ss.SSS"}), format.json()),
+    format: format.combine(format.timestamp({format: "YYYY-MM-DD HH:mm:ss.SSSZZ"}), format.json()),
     levels: logLevels,
     transports: [new transports.Console()],
-    level: "info",
+    level: process.env.LOG_LEVEL,
     defaultMeta: {
     }
 });
@@ -60,6 +59,10 @@ app.post('/v1/app2/logging', jsonParser, (req, res) => {
 
     logger.info("A request was made to second application");  
     logger.info("Sending a POST request to second application");
+
+    logger.debug("Debug log");
+    logger.warn("Warning log");
+    logger.error("Error log");
 
     const thirdAppRequest = http.request({...thirdAppOptions, headers: {...thirdAppOptions.headers, "Content-Length": Buffer.byteLength(JSON.stringify(req.body)), "X-B3-TraceId": traceId, "X-B3-SpanId": crypto.randomBytes(8).toString("hex"), "X-B3-ParentSpanId": spanId, "source": source, "destination": destination}}, thirdAppResponse => {
       thirdAppResponse.on('data', chunk => {
