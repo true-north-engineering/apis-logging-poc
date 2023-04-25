@@ -51,8 +51,6 @@ app.post('/v1/app2/logging', jsonParser, (req, res) => {
     const source = req.headers.source;
     const destination = req.headers.destination;
 
-    console.log(req.headers);
-
     logger.defaultMeta["trace_id"] = traceId;
     logger.defaultMeta["span_id"] = spanId;
 
