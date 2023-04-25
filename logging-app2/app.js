@@ -16,12 +16,11 @@ const jsonParser = bodyParser.json();
 const port = 8081;
 
 const logLevels = {
-    fatal: 0,
+    critical: 0,
     error: 1,
     warn: 2,
     info: 3,
-    debug: 4,
-    trace: 5,
+    debug: 4
 };
 
 const logger = createLogger({
@@ -30,9 +29,6 @@ const logger = createLogger({
     transports: [new transports.Console()],
     level: "info",
     defaultMeta: {
-        environment: "local",
-        domain: "logging-poc",
-        app_name: "logging-app2-node"
     }
 });
 
